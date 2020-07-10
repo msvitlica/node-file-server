@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>File Manager</h1>
+
+    <button id="createFile">Novi Fajl</button>
+
+    <table border="1" id="filesListTable">
+        <tr>
+            <td>Ime</td>
+            <td>Opcije</td>
+        </tr>
+    </table>
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+
+            <div>
+                <div>
+                    <p>Naziv Fajla:</p>
+                    <input type="text" name="fileName" id="fileName">
+                </div>
+                <hr>
+                <div>
+                    <p>Sadržaj:</p>
+                    <textarea name="fileContent" id="fileContent" cols="30" rows="10"></textarea>
+                </div>
+                <hr>
+                <button id="addFile">Snimi Fajl</button>
+            </div>
+        </div>
+
+    </div>
+    <script src="client.js"></script>
+</body>
+
+</html>
