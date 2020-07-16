@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Administracija</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+    <script  src="index.js"></script>
+</head>
+
+<body class="container" onload="onLoad()" >
+    <div class="contentWraper">
+        <div>
+            <div class="fileList">
+                <h1>File list</h1>
+                <button  class="openBtn" onclick="openDialog()">New File</button>
+                <table id="fileTable" >
+                    <th>Title</th>
+                    <th>Content</th>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div >
+    
+        <div id='addNewsDialog' class= 'testModal'>
+            <span id="closeBtn" class="close" onclick="closeDialog()">&times;</span>
+            <h5>Add Title</h5>
+            <input type="text" id='title'></input>
+            <h5>Add Content</h5>
+            <textarea id='content' cols="50" rows="10" placeholder="Add Content"></textarea>
+            <br>
+            <button  id="saveFile" onclick= "saveFile()" >Save</button>
+        </div>
+    </div>
+    </div>
+
+</body>
+
+</html>

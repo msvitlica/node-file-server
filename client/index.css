@@ -1,0 +1,77 @@
+
+body  {
+   
+    margin: 0;
+    font-family: Times, sans-serif;
+  }
+  nav {
+    overflow: hidden;
+    background-color: rgb(34, 34, 34);
+  }
+  nav a:hover {
+    background-color: black;
+    color: white;
+  }
+  nav button {
+    float: left;
+    margin:5px 20px 5px 0px;
+    padding: 7px;
+  }
+/* Tables */
+table, th, td, tr{
+    padding: 10px;
+    margin-top: 50px;
+    width:100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 2px solid black;
+    text-align: center;
+}
+th, tr, td{
+    word-wrap: break-word;
+}
+.testModal {
+    display: none;
+    position:right;
+    width: 50%;
+    height: 50%;
+    overflow: auto;
+    background-color: rgb(206, 201, 211);
+    
+}
+.delete_edit_modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    width: 30%;
+    height: 30%;
+    overflow: auto;
+    background-color: rgb(114, 228, 209);
+    
+}
+.closeModal{
+    color: rgb(17, 16, 16);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.editModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    width: 70%;
+    height: 50%;
+    overflow: auto;
+    background-color: rgb(61, 190, 100);
+    
+}
+.container{
+    background-color:hsl(172, 41%, 62%);
+    position: relative;
+  }
+  .contentWraper {
+    background-color:rgb(209, 204, 204);
+    margin: 20px auto;
+    padding: 50px; 
+    width: 80%;
+  }
