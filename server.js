@@ -16,7 +16,7 @@ http.createServer((req, res) => {
       let bodyStr;
       body.push(chunk);
     }).on('end', () => {
-      bodyStr = Buffer.concat(body).toString();
+//      bodyStr = Buffer.concat(body).toString();
     const fileInfo= JSON.parse(bodyStr);
     console.log(fileInfo);
     fs.writeFile('/files'+ fileInfo.title, fileInfo.content,(err)=>{
