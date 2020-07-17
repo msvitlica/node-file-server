@@ -1,6 +1,7 @@
 const createFileBtn = document.getElementById('createFile');
 const closeModalBtn = document.getElementById('closeModal');
 const addFileBtn = document.getElementById('addFile');
+let file = {};
 
 createFileBtn.addEventListener('click', onCreateFile);
 closeModalBtn.addEventListener('click', onCloseModal);
@@ -33,14 +34,14 @@ function fillTable(file) {
     let cell1 = row.insertCell();
     let cell2 = row.insertCell();
 
-    cell1.innerHTML = file;
-    cell2.innerHTML = `<a href="#" id="modify${file}">Izmjeni</a> | <a href="#" id="delete${file}">Obriši</a>`;
+    cell1.innerHTML = file.name;
+    cell2.innerHTML = `<a href="#" id="modify${file.id}">Izmjeni</a> | <a href="#" id="delete${file.id}">Obriši</a>`;
 
-    const modifyBtn = document.getElementById(`modify${file}`);
-    const deleteBtn = document.getElementById(`delete${file}`);
+    const modifyBtn = document.getElementById(`modify${file.id}`);
+    const deleteBtn = document.getElementById(`delete${file.id}`);
 
-    modifyBtn.addEventListener('click', () => { onModifyBtn(file) });
-    deleteBtn.addEventListener('click', () => { onDeleteBtn(file) });
+    modifyBtn.addEventListener('click', () => { onModifyBtn(file.id) });
+    deleteBtn.addEventListener('click', () => { onDeleteBtn(file.id) });
 }
 function clearHtmlTable(table) {
     while (table.length > 1) {
@@ -66,25 +67,34 @@ function onAddFile() {
     const fileName = document.getElementById('fileName');
     const content = document.getElementById('fileContent');
 
-    let newFile = {
-        name: fileName.value,
-        content: content.value
-    }
 
-    xhttp.open('POST', 'http://localhost:3000');
-    xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhttp.send(JSON.stringify(newFile));
+    if (file.id) {
+        xhttp.open('PUT', `http://localhost:3000/files/${file.id}`);
+        xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhttp.send(JSON.stringify({
+            id: file.id,
+            name: fileName.value,
+            content: content.value
+        }));
+    }
+    else {
+        xhttp.open('POST', 'http://localhost:3000');
+        xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhttp.send(JSON.stringify({
+            name: fileName.value,
+            content: content.value
+        }));
+    }
 
     onCloseModal();
     clearInput();
     onLoad();
 }
 
-function onModifyBtn(fileName) {
+function onModifyBtn(fileId) {
     let xhttp = new XMLHttpRequest();
-    let file;
 
-    xhttp.open('GET', `http://localhost:3000/search?fileName=${fileName}`);
+    xhttp.open('GET', `http://localhost:3000/files/${fileId}`);
     xhttp.send();
 
     xhttp.onreadystatechange = function () {
@@ -102,9 +112,9 @@ function onModifyBtn(fileName) {
     }
 }
 
-function onDeleteBtn(fileName) {
+function onDeleteBtn(fileId) {
     let xhttp = new XMLHttpRequest();
 
-    xhttp.open('DELETE', `http://localhost:3000/delete?fileName=${fileName}`);
+    xhttp.open('DELETE', `http://localhost:3000/${fileId}`);
     xhttp.send();
 }
