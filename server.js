@@ -28,9 +28,11 @@ const server = http.createServer((req, res) => {
             }
             dirId.forEach(dir => {
                 let name = fs.readdirSync(path.join(fileDirPath, dir))[0];
+                let fileStats = fs.statSync(path.join(fileDirPath, dir, name));
                 let obj = {
                     id: dir,
-                    name: name
+                    name: name,
+                    size: fileStats.size / 1000
                 }
                 files.push(obj);
             });
@@ -50,7 +52,7 @@ const server = http.createServer((req, res) => {
         req.on('end', () => {
             let data = JSON.parse(body);
             let dirId = path.join(fileDirPath, uuid.v4().toString());
-            fs.mkdir(test, (err) => {
+            fs.mkdir(dirId, (err) => {
                 if (err) throw err;
                 console.log('Directory added...');
             });

@@ -33,9 +33,11 @@ function fillTable(file) {
 
     let cell1 = row.insertCell();
     let cell2 = row.insertCell();
+    let cell3 = row.insertCell();
 
     cell1.innerHTML = file.name;
     cell2.innerHTML = `<a href="#" id="modify${file.id}">Izmjeni</a> | <a href="#" id="delete${file.id}">Obriši</a>`;
+    cell3.innerHTML = file.size;
 
     const modifyBtn = document.getElementById(`modify${file.id}`);
     const deleteBtn = document.getElementById(`delete${file.id}`);
