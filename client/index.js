@@ -24,7 +24,7 @@ function saveFile() {
         content: document.getElementById('content').value,
     };
 
-    xhttp.open('POST', 'http://localhost:8080/addNewFile');
+    xhttp.open('POST', 'http://localhost:8081/addNewFile');
     xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhttp.send(JSON.stringify(fileInfo));
     close();
@@ -32,7 +32,7 @@ function saveFile() {
 }
 function  displayFiles(){
     const xhttp = new XMLHttpRequest();
-    xhttp.open('GET', `http://localhost:8080/getAllFiles`);
+    xhttp.open('GET', `http://localhost:8081/getAllFiles`);
     xhttp.send();
 
     xhttp.onreadystatechange =function (){
@@ -45,7 +45,7 @@ function  displayFiles(){
         const cell1= row.insertCell();
         const cell2= row.insertCell();
         const cell3= row.insertCell();
-        cell1.innerHTML=el;
+        cell1.innerHTML=el.name;
         cell2.innerHTML=  `<a href="#" >Izmjeni</a> | <a href="#">Obriši</a>`
         cell3.innerHTML= 'velicina fajla';
         });
