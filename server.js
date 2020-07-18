@@ -28,11 +28,12 @@ http.createServer((req, res) => {
   }
   else if (req.url === '/getAllFiles' && req.method === 'GET'){
     //procitati fajlove iz files i poslati ih na client side
-    const directoryPath = path.join(__dirname, 'files');
+    const directoryPath = path.join(__dirname, '/files');
     fs.readdir(directoryPath, function (err, files) {
       if (err) {
-       return console.log(err);
-    }
+        console.log(files);
+      // return console.log(err);
+    } 
     res.writeHead(200, headers);
     res.end(JSON.stringify(files));
   })

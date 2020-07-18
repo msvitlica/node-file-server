@@ -39,14 +39,16 @@ function  displayFiles(){
         if(this.readyState ==4 && this.status== 200){
     let allFiles = JSON.parse(xhttp.responseText);
     console.log(allFiles);
-        allFiles.forEach(el=>{
+        allFiles.reverse().forEach(el=>{
         const table=document.getElementById('fileTable');
         const row=table.insertRow();
         const cell1= row.insertCell();
         const cell2= row.insertCell();
-        cell1.innerHTML=el.title;
-        cell2.innerHTML=el;
-        })
+        const cell3= row.insertCell();
+        cell1.innerHTML=el;
+        cell2.innerHTML=  `<a href="#" >Izmjeni</a> | <a href="#">Obriši</a>`
+        cell3.innerHTML= 'velicina fajla';
+        });
       }
     }
 
