@@ -17,18 +17,38 @@ try {
 }
 catch (err) {
     console.log(err);
-
     console.log('database file doesnt exist, creating empty array');
     fileList = [];
 }
 
 http.createServer((req, res) => {
 
-    //console.log(queryObj);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Request-Method', '*');
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET,POST,PUT,DELETE');
     res.setHeader('Access-Control-Allow-Headers', req.headers.origin);
+
+    //GET ALL FILES 
+    if (req.url === '/getAllFiles' && req.method === 'GET') {
+        res.writeHead(200, header);
+        res.end(JSON.stringify(fileList));
+    }
+    else if (req.method == 'OPTIONS') {
+        res.writeHead(200);
+        res.end();
+    }
+      // GET BY ID
+   if(req.url=== url.parse(req.url, true).pathname && req.method === 'GET'){
+    let body = [];
+    let pathName = url.parse(req.url, true).pathname;
+   let fileId = pathName.replace('/get/', '');
+   let directoryPath = path.join(__dirname, '/files', fileId);
+ let foundedFile= fileList.filter(el=> el.id=== fileId)[0];
+console.log(directoryPath);
+res.end(JSON.stringify(foundedFile));
+
+
+}
     // POST
     if (req.method === 'POST' && req.url === '/addNewFile') {
         let body = [];
@@ -48,33 +68,39 @@ http.createServer((req, res) => {
             fs.writeFileSync('database.json', JSON.stringify(fileList));
             fs.writeFile(directoryPath, fileInfo.content, (err) => {
                 if (err) throw err;
-                console.log('The file has been saved!');
+                console.log('The file ' + fileData.id + ' has been saved!');
             })
             res.writeHead(200, header);
             res.end();
         });
     }
     // PUT
-    /* else if (req.method === 'PUT' && req.url === '/:id'){
- let body = [];
-        req.on('data', (chunk) => {
-            body.push(chunk);
-        }).on('end', () => {
-            const fileInfo = JSON.parse(body);
-    }
-    // GET BY ID
-    else if(req.url=== '/:id' && req.method=== 'GET'){
+     else if (req.method === 'PUT' && req.url === url.parse(req.url, true).pathname){
+    let body=[];
+    let pathName = url.parse(req.url, true).pathname;
+    let directoryPath = path.join(__dirname, '/files',pathName);
+    console.log(directoryPath);
+    req.on('data',(chunk)=>{
+        body.push(chunk);
+    }).on('end',()=>{
+        let fileInfo = JSON.parse(body);
+     let editedFile=fileList.filter(el=>el.id ==fileInfo.id)[0];
+     editedFile.title=fileInfo.title;
+     editedFile.content= fileInfo.content;
+    fileList =fileList.map(el => el.id !== editedFile.id ? el : editedFile);
+    fs.writeFileSync('database.json', JSON.stringify(fileList));
+    fs.writeFile(directoryPath, editedFile.content ,(err) => {
+        if (err) throw err;
+        console.log('The file  has been updated!');
+    });
+     res.writeHead(200, header);
+            res.end();
+        
+    })
+}
 
-    }*/
-    //GET ALL FILES 
-    else if (req.url === '/getAllFiles' && req.method === 'GET') {
-        res.writeHead(200, header);
-        res.end(JSON.stringify(fileList));
-    }
-    else if (req.method == 'OPTIONS') {
-        res.writeHead(200);
-        res.end();
-    }
+  
+    
     // DELETE
     else if (req.url === url.parse(req.url, true).pathname && req.method === 'DELETE') {
         let pathName = url.parse(req.url, true).pathname;
@@ -84,12 +110,12 @@ http.createServer((req, res) => {
         let directoryPath = path.join(__dirname, '/files', pathName);
         fs.unlinkSync(directoryPath, (err) => {
             if (err) console.log(err);
-            return console.log('File Deleted!');
         });
          let delFile=fileList.filter(el =>(el.id !== fileId));
          fs.writeFileSync('database.json', JSON.stringify(delFile));
          fileList=delFile;
         console.log(fileList);
+        console.log('File deleted!');
         res.end();
          
     }
